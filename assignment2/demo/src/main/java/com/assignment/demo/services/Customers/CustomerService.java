@@ -1,8 +1,7 @@
-package com.assignment.demo.services;
+package com.assignment.demo.services.Customers;
 
 import com.assignment.demo.controllers.dto.CustomerCreationRequestDTO;
-import com.assignment.demo.repositories.CustomerRepository;
-import com.assignment.demo.repositories.models.Customers;
+import com.assignment.demo.repositories.models.CustomersEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -16,13 +15,11 @@ import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
-public class ClientService implements ClientInterface {
-
-    private final CustomerRepository customerRepository;
+public class CustomerService implements Customers {
 
     @Override
     public void addCustomer(CustomerCreationRequestDTO customerCreationRequestDTO) {
-        Customers newObject = new Customers();
+        CustomersEntity newObject = new CustomersEntity();
         /*
         So I know this is a little... magical but what's happening here is really cool.
         In this single function we are actually setting all values that have the same names between two objects of different types.
@@ -31,7 +28,7 @@ public class ClientService implements ClientInterface {
         BeanUtils.copyProperties(customerCreationRequestDTO, newObject);
         newObject.setCustomerId(UUID.randomUUID().toString().substring(0, 5));
         try {
-            customerRepository.save(newObject);
+            //customerRepository.save(newObject);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to process customer creation at this time. Please try again later.");
         }
@@ -39,12 +36,6 @@ public class ClientService implements ClientInterface {
 
     @Override
     public List<CustomerCreationRequestDTO> listCustomers() {
-        return StreamSupport.stream(customerRepository.findAll().spliterator(), true)
-                .map(customer -> {
-                    CustomerCreationRequestDTO customerRequest = new CustomerCreationRequestDTO();
-                    BeanUtils.copyProperties(customer, customerRequest);
-                    return customerRequest;
-                })
-                .collect(Collectors.toList());
+        return null;
     }
 }

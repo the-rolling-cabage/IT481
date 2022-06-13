@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet author="alexa (generated)" id="1654484709793-1">
+        <sql>
+            CREATE LOGIN User_Sales WITH PASSWORD='UserAP@ssw0rd';
+CREATE LOGIN User_HR WITH PASSWORD='UserBP@ssw0rd';
+CREATE LOGIN User_CEO WITH PASSWORD='UserCP@ssw0rd';
+            CREATE USER User_Sales;
+            CREATE USER User_HR;
+            CREATE USER User_CEO;
+            CREATE ROLE SalesRole;
+            ALTER ROLE SalesRole ADD MEMBER User_Sales;
+            CREATE ROLE HRRole;
+            ALTER ROLE HRRole ADD MEMBER User_HR;
+            CREATE ROLE CEORole;
+            ALTER ROLE CEORole ADD MEMBER User_CEO;
+            GRANT SELECT ON dbo.Orders TO SalesRole;
+            GRANT SELECT ON dbo.Customers TO SalesRole;
+            GRANT SELECT ON dbo.Employees TO HRRole;
+            GRANT SELECT ON dbo.Customers TO CEORole ;
+            GRANT SELECT ON dbo.Orders TO CEORole ;
+            GRANT SELECT ON dbo.Employees TO CEORole ;
+        </sql>
+    </changeSet>
+</databaseChangeLog>
